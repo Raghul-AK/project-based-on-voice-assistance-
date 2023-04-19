@@ -1,0 +1,155 @@
+import tkinter
+from tkinter import *
+import speech_recognition as pk
+a1 = pk.Recognizer()
+root = Tk()
+root.geometry('700x400')
+root.configure(bg='#8FB9A8')
+root.title("Base swap ")
+
+result = tkinter.Text(width=40, height=2)
+result.pack(pady=10)
+result.configure(font=("Book Antique", 14), fg='#2A363B', bg='#F1D1B5')
+result.tag_configure("", justify=CENTER)
+result.insert(1.0, "Say the type of conversion...")
+result.tag_add("", "1.0", "end")
+entry1 = Entry(width=40, justify=CENTER)
+
+
+def reset():
+    root.title("Number Converter ")
+    result.delete("1.0", "end")
+    entry1.delete(0, "end")
+    print(root.focus())
+    result.tag_configure("", justify=CENTER)
+    result.insert(1.0, "Say the type of conversion...")
+    result.tag_add("", "1.0", "end")
+
+
+def clear(e):
+    entry1.delete(0, "end")
+
+
+def display():
+    but.c1 = but.temp
+    result.delete("1.0","end")
+    m = entry1.get()
+    if but.c1 == "binary to decimal":
+        k = int(m, 2)
+    elif but.c1 == "decimal to binary":
+        k = bin(int(m))[2:]
+    elif but.c1 == "decimal to octal":
+        k = oct(int(m))[2:]
+    elif but.c1 == "decimal to hexadecimal":
+        k = hex(int(m))[2:]
+    elif but.c1 == "octal to decimal":
+        k = int(m, 8)
+    elif but.c1 == "hexadecimal to decimal":
+        k = int(m, 16)
+
+    print(k)
+    result.tag_configure("", justify=CENTER)
+    result.insert(1.0,"Result = "+str(k))
+    result.tag_add("", "1.0", "end")
+
+
+def displa(self):
+    display()
+
+
+def kp(self):
+    but()
+
+
+def but():
+    root.title("Listening...")
+    with pk.Microphone() as source:
+        print("You can speak now")
+        r1 = a1.listen(source)
+        but.c1 = a1.recognize_google(r1)
+        but.c1 = but.c1.lower()
+        if but.c1 != "convert":
+            but.temp = but.c1 
+        result.tag_configure("", justify=CENTER)
+        result.delete("1.0", "end")
+        result.insert(1.0, but.c1)
+        result.tag_add("", "1.0", "end")
+
+        if but.c1 == "binary to decimal":
+            but.title = "Number Converter - Binary to Decimal"
+            root.title(but.title)
+            print('Enter the binary number: ')
+            entry1.insert(0, "Enter A Binary Value")
+            entry1.configure(font=("Times New Roman", 13, "italic"), fg='#2A363B', bg='#F1D1B5')
+            entry1.pack(padx=50, pady=10)
+            entry1.bind("<FocusIn>", clear)
+
+        elif but.c1 == "decimal to binary":
+            but.title = "Number Converter - Decimal to Binary"
+            print('Enter the decimal number: ')
+            root.title(but.title)
+            entry1.insert(0, "Enter A Decimal Value")
+            entry1.configure(font=("Times New Roman", 13, "italic"), fg='#2A363B', bg='#F1D1B5')
+            entry1.pack(padx=50, pady=10)
+            entry1.bind("<FocusIn>", clear)
+
+        elif but.c1 == "decimal to octal":
+            but.title = "Number Converter - Decimal to Octal"
+            print('enter your octal no: ')
+            root.title(but.title)
+            entry1.insert(0, "Enter A Decimal Value")
+            entry1.configure(font=("Times New Roman", 13, "italic"), fg='#2A363B', bg='#F1D1B5')
+            entry1.pack(padx=50, pady=10)
+            entry1.bind("<FocusIn>", clear)
+        elif but.c1 == "octal to decimal":
+            but.title = "Number Converter - Octal To Decimal"
+            print("enter your octal no: ")
+            root.title(but.title)
+            entry1.insert(0, "Enter An Octal Value")
+            entry1.configure(font=("Times New Roman", 13, "italic"), fg='#2A363B', bg='#F1D1B5')
+            entry1.pack(padx=50, pady=10)
+            entry1.bind("<FocusIn>", clear)
+        elif but.c1 == "hexadecimal to decimal":
+            but.title = "Number Converter - Hexadecimal To Decimal"
+            print("Enter your hexadecimal value: ")
+            root.title(but.title)
+            entry1.insert(0, "Enter A Hexadecimal Value")
+            entry1.configure(font=("Times New Roman", 13, "italic"), fg='#2A363B', bg='#F1D1B5')
+            entry1.pack(padx=50, pady=10)
+            entry1.bind("<FocusIn>", clear)
+        elif but.c1 == "decimal to hexadecimal":
+            but.title = "Number Converter - Decimal To Hexadecimal"
+            print("Enter decimal value: ")
+            root.title(but.title)
+            entry1.insert(0, "Enter A Decimal Value")
+            entry1.configure(font=("Times New Roman", 13, "italic"), fg='#2A363B', bg='#F1D1B5')
+            entry1.pack(padx=50, pady=10)
+            entry1.bind("<FocusIn>", clear)
+        elif but.c1 == "reset":
+            reset()
+        elif but.c1 == "convert":
+            root.title(but.title)
+            display()
+        else:
+            but.title="Warning"
+            root.title(but.title)
+            result.tag_configure("", justify=CENTER)
+            result.delete("1.0", "end")
+            result.insert(1.0, "Did you mean: "+but.c1+" ?")
+            result.tag_add("start","1.14","1.50")
+            result.tag_configure("start", background= 'orange', foreground= '#2A363B')
+            result.tag_add("", "1.0", "end")
+            print("Did you mean : "+but.c1)
+
+
+mic = PhotoImage(file=r"C:\Users\91638\OneDrive\Desktop\mic.png")
+Mic = mic.subsample(40, 49)
+convert = PhotoImage(file=r"C:\Users\91638\OneDrive\Desktop\convert1.png")
+Convert = convert.subsample(7, 7)
+Button(text="SPEAK", image=Mic, compound=BOTTOM, command=but, relief="raised", overrelief="sunken").pack(pady=10)
+Button(text="CONVERT", image=Convert, compound=BOTTOM, command=display, relief="raised", overrelief="sunken").pack(pady=10)
+Button(text="Reset",command=reset,width=10, relief="raised", overrelief="sunken").pack(pady=10)
+
+root.bind("s", kp)
+root.bind("<Return>", displa)
+root.mainloop()
